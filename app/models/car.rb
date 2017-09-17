@@ -1,4 +1,5 @@
 class Car < ApplicationRecord
+
   enum style: [:Coupe, :Sedan, :SUV]
   enum status: [:CheckedOut, :Available]
 
@@ -9,4 +10,5 @@ class Car < ApplicationRecord
   validates :style, presence: true, inclusion: {in: styles}
   validates :location, presence: true
   validates :status, presence: true, inclusion: {in: statuses}
+
 end
