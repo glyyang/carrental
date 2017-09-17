@@ -6,7 +6,7 @@ class Car < ApplicationRecord
   validates :manufacturer, presence: true
   validates :model, presence: true
   validates :hourlyRentalRate, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :style, presence: true, inclusion: {in: style}
+  validates :style, presence: true, inclusion: {in: styles}
   validates :location, presence: true
-  validates :status, presence: true, inclusion: {in: status}
+  validates :status, presence: true, inclusion: {in: statuses}
 end
