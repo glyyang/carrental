@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Registrationnumber:</strong>
+  <%= @reservation.registrationNumber %>
+</p>
+
+<p>
+  <strong>Checkouttime:</strong>
+  <%= @reservation.checkOutTime %>
+</p>
+
+<p>
+  <strong>Pickuptime:</strong>
+  <%= @reservation.pickUpTime %>
+</p>
+
+<p>
+  <strong>Expectedreturntime:</strong>
+  <%= @reservation.expectedReturnTime %>
+</p>
+
+<p>
+  <strong>Returntime:</strong>
+  <%= @reservation.returnTime %>
+</p>
+
+<p>
+  <strong>Reservationstatus:</strong>
+  <%= @reservation.reservationStatus %>
+</p>
+
+<%= link_to 'Edit', edit_reservation_path(@reservation) %> |
+<%= link_to 'Back', reservations_path %>

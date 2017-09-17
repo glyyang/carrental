@@ -1,0 +1,47 @@
+<%= form_with(model: reservation, local: true) do |form| %>
+  <% if reservation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
+
+      <ul>
+      <% reservation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :registrationNumber %>
+    <%= form.text_field :registrationNumber, id: :reservation_registrationNumber %>
+  </div>
+
+  <div class="field">
+    <%= form.label :checkOutTime %>
+    <%= form.datetime_select :checkOutTime, id: :reservation_checkOutTime %>
+  </div>
+
+  <div class="field">
+    <%= form.label :pickUpTime %>
+    <%= form.datetime_select :pickUpTime, id: :reservation_pickUpTime %>
+  </div>
+
+  <div class="field">
+    <%= form.label :expectedReturnTime %>
+    <%= form.datetime_select :expectedReturnTime, id: :reservation_expectedReturnTime %>
+  </div>
+
+  <div class="field">
+    <%= form.label :returnTime %>
+    <%= form.datetime_select :returnTime, id: :reservation_returnTime %>
+  </div>
+
+  <div class="field">
+    <%= form.label :reservationStatus %>
+    <%= form.text_field :reservationStatus, id: :reservation_reservationStatus %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
