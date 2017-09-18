@@ -1,14 +1,14 @@
 class Car < ApplicationRecord
 
-  enum style: [:Coupe, :Sedan, :SUV]
-  enum status: [:CheckedOut, :Available]
+  enum styles: [:Coupe, :Sedan, :SUV]
+  enum statuses: [:CheckedOut, :Available]
 
-  validates :licensePlateNumber, presence: true, uniqueness: {case_sensitive: false}, length: {is: 7}
-  validates :manufacturer, presence: true
-  validates :model, presence: true
-  validates :hourlyRentalRate, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :style, presence: true, inclusion: {in: styles}
-  validates :location, presence: true
-  validates :status, presence: true, inclusion: {in: statuses}
+  validates :licensePlateNumber, presence: true, uniqueness: {case_sensitive: false}, length: {is: 7}, null: false
+  validates :manufacturer, presence: true, null: false
+  validates :model, presence: true, null: false
+  validates :hourlyRentalRate, presence: true, numericality: { greater_than_or_equal_to: 0 }, null: false
+  validates :style, presence: true, inclusion: {in: styles}, null: false
+  validates :location, presence: true, null: false
+  validates :status, presence: true, inclusion: {in: statuses}, null: false
 
 end

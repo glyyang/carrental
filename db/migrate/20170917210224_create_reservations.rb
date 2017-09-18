@@ -12,5 +12,6 @@ class CreateReservations < ActiveRecord::Migration[5.1]
       t.references :car
       t.timestamps
     end
+    add_index :reservations, :registrationNumber, :unique => true
   end
 end
