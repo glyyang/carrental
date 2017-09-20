@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="52a8791f-1749-4f65-9e2a-50f58b3800c0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/cars_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/cars_controller.rb" />
-    </list>
+    <list default="true" id="52a8791f-1749-4f65-9e2a-50f58b3800c0" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -378,7 +376,7 @@
       <workItem from="1505586194782" duration="460000" />
       <workItem from="1505614522262" duration="2000" />
       <workItem from="1505615789590" duration="9672000" />
-      <workItem from="1505872560738" duration="5999000" />
+      <workItem from="1505872560738" duration="6030000" />
     </task>
     <task id="LOCAL-00001" summary="set up car-rental app ruby codes using RubyMine">
       <created>1505586322273</created>
@@ -412,7 +410,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16221000" />
+    <option name="totallyTimeSpent" value="16252000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
