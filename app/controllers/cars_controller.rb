@@ -10,16 +10,26 @@ class CarsController < ApplicationController
   # GET /cars/1
   # GET /cars/1.json
   def show
-    @car = find
+    @car = Car.find(params[:model])
   end
 
   # GET /cars/new
+  # this should redirect to create html
   def new
     @car = Car.new
   end
 
   # GET /cars/1/edit
   def edit
+    @car = Car.find(params[:licensePlateNumber])
+    @car.status = params[:status]
+    if @car.save
+      format.html { redirect_to @car, notice: 'Car was successfully edited.' }
+      format.json { render :show, status: :created, location: @car }
+    else
+      format.html { render :new }
+      format.json { render json: @car.errors, status: :unprocessable_entity }
+    end
   end
 
   # POST /cars
