@@ -23,13 +23,6 @@ class CarsController < ApplicationController
   def edit
     @car = Car.find(params[:licensePlateNumber])
     @car.status = params[:status]
-    if @car.save
-      format.html { redirect_to @car, notice: 'Car was successfully edited.' }
-      format.json { render :show, status: :created, location: @car }
-    else
-      format.html { render :new }
-      format.json { render json: @car.errors, status: :unprocessable_entity }
-    end
   end
 
   # POST /cars

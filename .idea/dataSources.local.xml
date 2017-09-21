@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Rails CarRentalApp: production" uuid="e7285400-71d1-4ec4-be80-f7e2da906d15">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+    </data-source>
+    <data-source name="Rails CarRentalApp: development" uuid="666c582b-8314-49f4-84cd-3b0ef59c42fc">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <first-sync>true</first-sync>
+    </data-source>
+    <data-source name="Rails CarRentalApp: test" uuid="31898441-456a-4333-a96a-f105c20e62d4">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+    </data-source>
+  </component>
+</project>
