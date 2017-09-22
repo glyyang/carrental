@@ -12,20 +12,8 @@
 
 ActiveRecord::Schema.define(version: 20170917210224) do
 
-  create_table "cars", force: :cascade do |t|
-    t.string "licensePlateNumber"
-    t.string "manufacturer"
-    t.string "model"
-    t.float "hourlyRentalRate"
-    t.string "style"
-    t.string "location"
-    t.string "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "reservations", force: :cascade do |t|
-    t.string "registrationNumber"
+    t.string "registrationNumber", null: false
     t.datetime "checkOutTime"
     t.datetime "pickUpTime"
     t.datetime "expectedReturnTime"
@@ -36,15 +24,18 @@ ActiveRecord::Schema.define(version: 20170917210224) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["car_id"], name: "index_reservations_on_car_id"
+    t.index ["registrationNumber"], name: "index_reservations_on_registrationNumber", unique: true
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "email", null: false
     t.string "name"
-    t.string "email"
-    t.string "password"
+    t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "password_digest"
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
 end

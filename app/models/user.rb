@@ -1,11 +1,21 @@
 class User < ApplicationRecord
 
-  has_secure_password
-
+  before_save {email.downcase!}
+  
   enum roles: [:Customer, :Admin, :SuperAdmin]
+  
+  validates :name, presence: true, length: { maximum: 50 }
+  VALID_EMAIL_FORMAT = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :email, presence: true, length: { maximum: 255},
+                    format: { with: VALID_EMAIL_FORMAT },
+                    uniqueness: { case_sensitive: false }
+  validates :role, inclusion: { in: roles }
 
-  validates :name, presence: true, null: false
-  validates :email, presence: true, uniqueness: {case_sensitive: false}, null: false
-  validates :role, presence: true, inclusion: {in: roles}, null: false
+  has_secure_password
+  validates :password, presence: true, length: { minimum: 6 }
+
+  def admin?
+    self.role == 'Admin'
+  end
 
 end
