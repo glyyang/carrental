@@ -34,6 +34,8 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap-sass', '3.3.7'
 # Use test gem
 gem 'rails-controller-testing'
+# Use jQuery library
+gem 'jquery-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
