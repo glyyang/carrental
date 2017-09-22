@@ -10,23 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170917210224) do
-
-  create_table "reservations", force: :cascade do |t|
-    t.string "registrationNumber", null: false
-    t.datetime "checkOutTime"
-    t.datetime "pickUpTime"
-    t.datetime "expectedReturnTime"
-    t.datetime "returnTime"
-    t.string "reservationStatus"
-    t.integer "user_id"
-    t.integer "car_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["car_id"], name: "index_reservations_on_car_id"
-    t.index ["registrationNumber"], name: "index_reservations_on_registrationNumber", unique: true
-    t.index ["user_id"], name: "index_reservations_on_user_id"
-  end
+ActiveRecord::Schema.define(version: 20170917174520) do
 
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
