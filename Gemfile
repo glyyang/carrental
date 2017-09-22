@@ -36,6 +36,11 @@ gem 'bootstrap-sass', '3.3.7'
 gem 'rails-controller-testing'
 # Use jQuery library
 gem 'jquery-rails'
+# Use faker to generate sample users
+gem 'faker', '1.7.3'
+# Use for Pagination
+gem 'will_paginate',           '3.1.5'
+gem 'bootstrap-will_paginate', '1.0.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

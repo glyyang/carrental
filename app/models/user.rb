@@ -24,5 +24,9 @@ class User < ApplicationRecord
   def admin?
     self.role == 'Admin'
   end
+  
+  def superadmin?
+    self.role = 'SuperAdmin'
+  end
 
 end
