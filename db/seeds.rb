@@ -5,6 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+# Generate User samples:
 User.create!(name:  "Example Admin",
              email: "example_admin@email.com",
              password:              "123456",
@@ -33,4 +35,24 @@ User.create!(name:  "Example Customer",
                password:              password,
                password_confirmation: password, 
                role: role)
+end
+
+# Generate Car samples:
+50.times do |cnt|
+    lpt = Faker::Vehicle.vin[-7..-1]
+    man = Faker::Vehicle.manufacture
+    mod = "model#{cnt}"
+    hr = cnt+100.00
+    style = "#{Car.styles.key(cnt%3)}"
+    loc = "distrct#{cnt}"
+    status = "#{Car.statuses.key(cnt%2)}"
+    Car.create!(
+        licensePlateNumber: lpt,
+        manufacturer: man,
+        model: mod,
+        hourlyRentalRate: hr,
+        style: style,
+        location: loc,
+        status: status
+        )
 end

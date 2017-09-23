@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170917174520) do
+ActiveRecord::Schema.define(version: 20170923204058) do
+
+  create_table "cars", force: :cascade do |t|
+    t.string "licensePlateNumber", null: false
+    t.string "manufacturer"
+    t.string "model"
+    t.float "hourlyRentalRate"
+    t.string "style"
+    t.string "location"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["licensePlateNumber"], name: "index_cars_on_licensePlateNumber", unique: true
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", null: false

@@ -1,0 +1,20 @@
+<% provide(:title, @car.manufacturer+' - '+@car.model) %>
+
+<div class="row">
+  <aside class="col-md-4">
+    <section class="car_info">
+      <h1>
+        <%= @car.manufacturer+' - '+@car.model %>
+        <%= @car.status %>
+      </h1>
+    </section>
+  </aside>
+</div>
+
+
+
+<%= link_to 'Edit', edit_car_path(@car) %> |
+<% if session[:user_role] && session[:user_role]=='Admin' %>
+    <%= link_to "Delete", @car, method: :delete, data: { confirm: "You sure?" } %> |
+<% end %>
+<%= link_to 'Back', cars_path %>

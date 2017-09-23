@@ -1,0 +1,21 @@
+<% provide(:title, 'All cars') %>
+<h1>View and Search cars</h1>
+
+<%= form_tag(cars_path, method: :get) do %>
+  <%= text_field_tag :location, params[:location], placeholder: "Search by car location" %>
+  <%= collection_select nil, :style, Car.select("distinct style"), :style, :style, {:include_blank => "Please select car style"} %>
+  <%= submit_tag 'Search', name: nil %>
+<% end %>
+
+<%= will_paginate %>
+
+<ul class="users">
+  <% @cars.each do |car| %>
+    <li>
+      <%= link_to car.licensePlateNumber, car %>
+      <%= car.status %>
+    </li>
+  <% end %>
+</ul>
+
+<%= will_paginate %>

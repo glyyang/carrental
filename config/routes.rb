@@ -11,5 +11,8 @@ Rails.application.routes.draw do
   get '/users/:id/edit' => 'users#edit'
   patch '/users/:id' => 'users#update' 
   resources :users
+  
+  get '/cars/new' => 'cars#new'
+  resources :cars
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
