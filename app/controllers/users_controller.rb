@@ -28,16 +28,16 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    respond_to do |format|
-      if @user.save
+    if @user.save
+      if logged_in?
+        flash[:success] = "New user account created!"
+      else
         log_in @user
         flash[:success] = "Welcome to Car Rental App!"
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
+      redirect_to @user
+    else
+      render :new
     end
   end
 
@@ -45,26 +45,20 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     @user = User.find(params[:id])
-    respond_to do |format|
-      if @user.update_attributes(user_params)
-        flash[:sucess] = "Profile updated."
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.update_attributes(user_params)
+      flash[:sucess] = "Profile updated."
+      redirect_to @user
+    else
+      render :edit
     end
   end
 
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @user = User.find(params[:id]).destroy
+    flash[:success] = 'User deleted.'
+    redirect_to users_url
   end
 
   private
@@ -92,6 +86,7 @@ class UsersController < ApplicationController
     # Confirms the correct user.
     def correct_user
       @user = User.find(session[:user_id])
+      # @user = User.find(params[:id])
       redirect_to(root_url) unless current_user?(@user)
     end
     
