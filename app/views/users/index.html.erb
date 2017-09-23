@@ -1,12 +1,17 @@
 <% provide(:title, 'All users') %>
-<h1>All users</h1>
+<h1>View and Search users</h1>
+
+<%= form_tag(users_path, method: :get) do %>
+  <%= text_field_tag :name, params[:name], placeholder: "Search by user name" %>
+  <%= collection_select nil, :role, User.select("distinct role"), :role, :role, {:include_blank => "Please select user status"} %>
+  <%= submit_tag 'Search', name: nil %>
+<% end %>
 
 <%= will_paginate %>
 
 <ul class="users">
   <% @users.each do |user| %>
     <li>
-      
       <%= link_to user.name, user %>
     </li>
   <% end %>

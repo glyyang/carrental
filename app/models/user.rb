@@ -28,5 +28,14 @@ class User < ApplicationRecord
   def superadmin?
     self.role = 'SuperAdmin'
   end
+  
+  # Conditionally search database
+  def self.search(condition)
+    if condition
+      where("name LIKE ? AND role LIKE ?", "%#{condition[:name]}%", "#{condition[:role]}").order('id ASC')
+    else 
+      order('id ASC')
+    end
+  end
 
 end
