@@ -1,7 +1,7 @@
 <% provide(:title, 'All cars') %>
 <h1>View and Search cars</h1>
 
-<%= search_form_for @q do |f| %>
+<%= search_form_for @q_cars do |f| %>
   <%= f.label :location %>
   <%= f.search_field :location_cont %>
   <%= f.label :manufacturer %>
@@ -16,12 +16,10 @@
 <% end %>
 
 <%= will_paginate %>
-<div class="users" >
-<%= content_tag :table do %>
-  <%= content_tag :thead, display_sort_column_headers(@q), nil, false %>
-  <%= content_tag :tbody, display_search_results(@cars), nil, false %>
+<%= content_tag :table, class: 'table' do %>
+  <%= content_tag :thead, display_car_sorted_column_headers(@q_cars), nil, false %>
+  <%= content_tag :tbody, display_car_search_results(@cars), nil, false %>
 <% end %>
-</div>
 <%= will_paginate %>
 
 

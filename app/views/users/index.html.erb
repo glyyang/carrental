@@ -1,20 +1,19 @@
 <% provide(:title, 'All users') %>
 <h1>View and Search users</h1>
 
-<%= form_tag(users_path, method: :get) do %>
-  <%= text_field_tag :name, params[:name], placeholder: "Search by user name" %>
-  <%= collection_select nil, :role, User.select("distinct role"), :role, :role, {:include_blank => "Please select user status"} %>
+<%= search_form_for @q_users do |f| %>
+  <%= f.label :name %>
+  <%= f.search_field :name_cont %>
+  <%= f.label :role %>
+  <%= f.collection_select :role_eq, User.roles, :first, :first, {:include_blank => "Please select user type"} %>
   <%= submit_tag 'Search', name: nil %>
 <% end %>
 
 <%= will_paginate %>
 
-<ul class="users">
-  <% @users.each do |user| %>
-    <li>
-      <%= link_to user.name, user %>
-    </li>
-  <% end %>
-</ul>
+<%= content_tag :table, class: 'table' do %>
+  <%= content_tag :thead, display_user_sorted_column_headers(@q_users), nil, false  %>
+  <%= content_tag :tbody, display_user_search_results(@users), nil, false  %>
+<% end %>
 
 <%= will_paginate %>

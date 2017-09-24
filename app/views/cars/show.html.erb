@@ -1,20 +1,27 @@
 <% provide(:title, @car.manufacturer+' - '+@car.model) %>
 
+<h1>
+  <%= @car.manufacturer %>
+</h1>
 <div class="row">
   <aside class="col-md-4">
     <section class="car_info">
-      <h1>
-        <%= @car.manufacturer+' - '+@car.model %>
-        <%= @car.status %>
-      </h1>
+        <%= @car.model %><br>
+        <%= @car.licensePlateNumber %><br>
+        <%= '%.2f' % @car.hourlyRentalRate %><br>
+        <%= @car.style %><br>
+        <%= @car.location %><br>
+        <%= @car.status %><br>
+      
     </section>
   </aside>
 </div>
 
 
 
-<%= link_to 'Edit', edit_car_path(@car) %> |
-<% if session[:user_role] && session[:user_role]=='Admin' %>
-    <%= link_to "Delete", @car, method: :delete, data: { confirm: "You sure?" } %> |
+<%= link_to 'Reserve', edit_car_path(@car) %> |
+<% if isAdmin? || isSuperAdmin? %>
+  <%= link_to 'Edit', edit_car_path(@car) %> |
+  <%= link_to "Delete", @car, method: :delete, data: { confirm: "Delete this car?" } %> |
 <% end %>
-<%= link_to 'Back', cars_path %>
+<%= link_to 'List', cars_path %>

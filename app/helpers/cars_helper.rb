@@ -1,6 +1,7 @@
 module CarsHelper
   
-  def model_fields 
+  def car_fields 
+    # fields to be displayed on front-end view
     [:licensePlateNumber, :manufacturer, :status] 
   end
     
@@ -8,21 +9,21 @@ module CarsHelper
     action_name == 'advanced_search' ? :post : :get 
   end
   
-  def display_sort_column_headers(search) 
-    model_fields.each_with_object('') do |field, string| 
+  def display_car_sorted_column_headers(search) 
+    car_fields.each_with_object('') do |field, string| 
       string << content_tag(:th, sort_link(search, field, {}, method: action)) 
     end 
   end
   
-  def display_search_results(objects) 
+  def display_car_search_results(objects) 
     objects.each_with_object('') do |object, string| 
-      string << content_tag(:tr, display_search_results_row(object)) 
+      string << content_tag(:tr, display_car_search_results_row(object)) 
     end 
   end
   
-  def display_search_results_row(object)
+  def display_car_search_results_row(object)
     fieldCount = 0
-    model_fields.each_with_object('') do |field, string|
+    car_fields.each_with_object('') do |field, string|
       if fieldCount == 0
         string << content_tag(:td, link_to(object.send(field), '/cars/' + object.id.to_s))
       else

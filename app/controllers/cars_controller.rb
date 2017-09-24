@@ -1,12 +1,12 @@
 class CarsController < ApplicationController
+  include CarsHelper
   before_action :logged_in_user, only: [:new, :show, :edit, :update, :destroy]
   
   # GET /cars
   # GET /cars.json
   def index
-    # @cars = Car.search(params).paginate(page: params[:page])
-    @q = Car.ransack(params[:q])
-    @cars = @q.result().paginate(page: params[:page])
+    @q_cars = Car.ransack(params[:q])
+    @cars = @q_cars.result().paginate(page: params[:page])
   end
 
   # GET /cars/1
@@ -67,14 +67,5 @@ class CarsController < ApplicationController
     def car_params
       params.require(:car).permit(:licensePlateNumber, :manufacturer, :model, :hourlyRentalRate, :style, :location, :status)  
     end
-    
-    # # Confirms a logged-in user.
-    # def logged_in_user
-    #   unless logged_in?
-    #     store_location
-    #     flash[:danger] = "Please log in."
-    #     redirect_to login_url
-    #   end
-    # end
     
 end

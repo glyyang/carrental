@@ -26,15 +26,15 @@
       <%= f.label :password_confirmation, "Confirmation" %>
       <%= f.password_field :password_confirmation %>
       
-      <% if logged_in? && session[:user_role]=="Admin" %>
+      <% if logged_in? && isAdmin? %>
         <%= f.label :role %>
         <%= f.select :role, [[:Customer, :Customer], [:Admin, :Admin]], {:prompt => "Please select role"} %>
-      <% elsif logged_in? && session[:user_role]=="SuperAdmin" %>
+      <% elsif logged_in? && isSuperAdmin? %>
         <%= f.label :role %>
         <%= f.select :role, [[:Customer, :Customer], [:Admin, :Admin], [:SuperAdmin, :SuperAdmin]], {:prompt => "Please select role"} %>
       <% end %>
 
-      <%= f.submit "Create an account", class: "btn btn-primary" %>
+      <%= f.submit "Submit", class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>

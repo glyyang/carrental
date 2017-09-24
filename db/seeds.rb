@@ -53,6 +53,5 @@ end
         hourlyRentalRate: hr,
         style: style,
         location: loc,
-        status: status
-        )
+        status: status)
 end

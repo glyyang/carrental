@@ -1,12 +1,15 @@
 class UsersController < ApplicationController
+  include UsersHelper
+  
   before_action :logged_in_user, only: [:show, :edit, :update, :destroy]
   before_action :correct_user,   only: [:index, :edit, :update]
 
   # GET /users
   # GET /users.json
   def index
-    # @users = User.paginate(page: params[:page])
-    @users = User.search(params).paginate(page: params[:page])
+    # @users = User.search(params).paginate(page: params[:page])
+    @q_users = User.ransack(params[:q])
+    @users = @q_users.result().paginate(page: params[:page])
   end
 
   # GET /users/1

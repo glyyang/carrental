@@ -10,14 +10,5 @@ class Car < ApplicationRecord
   validates :style, presence: true, inclusion: {in: styles}
   validates :location, presence: true
   validates :status, presence: true, inclusion: {in: statuses}
-    
-  # Conditionally search car in database
-  # def self.search(condition)
-  #   if condition
-  #     where("location LIKE ? AND style LIKE ?", "%#{condition[:location]}%", "#{condition[:style]}").order('id ASC')
-  #   else 
-  #     order('id ASC')
-  #   end
-  # end
   
 end

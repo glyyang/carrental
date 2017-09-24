@@ -54,5 +54,13 @@ module SessionsHelper
       # @user = User.find(params[:id])
       redirect_to(root_url) unless current_user?(@user)
     end
+    
+    # Check if current user is Admin
+    def isAdmin?
+        session[:user_role] == 'Admin'
+    end
+    def isSuperAdmin?
+        session[:user_role] == 'SuperAdmin'
+    end
   
 end
