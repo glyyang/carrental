@@ -41,10 +41,10 @@ end
 50.times do |cnt|
     lpt = Faker::Vehicle.vin[-7..-1]
     man = Faker::Vehicle.manufacture
-    mod = "model#{cnt}"
-    hr = cnt+100.00
+    mod = "model#{cnt%8}"
+    hr = Faker::Number.between(80.00, 300.00)
     style = "#{Car.styles.key(cnt%3)}"
-    loc = "distrct#{cnt}"
+    loc = Faker::Address.zip_code
     status = "#{Car.statuses.key(cnt%2)}"
     Car.create!(
         licensePlateNumber: lpt,

@@ -1,21 +1,25 @@
 <% provide(:title, 'All cars') %>
 <h1>View and Search cars</h1>
 
-<%= form_tag(cars_path, method: :get) do %>
-  <%= text_field_tag :location, params[:location], placeholder: "Search by car location" %>
-  <%= collection_select nil, :style, Car.select("distinct style"), :style, :style, {:include_blank => "Please select car style"} %>
-  <%= submit_tag 'Search', name: nil %>
+<%= search_form_for @q do |f| %>
+  <%= f.label :location %>
+  <%= f.search_field :location_cont %>
+  <%= f.label :manufacturer %>
+  <%= f.collection_select :manufacturer_cont, Car.select("distinct manufacturer"), :manufacturer, :manufacturer, {:include_blank => "Please select car manufacturer"} %>
+  <%= f.label :model %>
+  <%= f.collection_select :model_cont, Car.select("distinct model"), :model, :model, {:include_blank => "Please select car model"} %>
+  <%= f.label :style %>
+  <%= f.collection_select :style_cont, Car.select("distinct style"), :style, :style, {:include_blank => "Please select car style"} %> 
+  <%= f.label :status %>
+  <%= f.collection_select :status_cont, Car.select("distinct status"), :status, :status, {:include_blank => "Please select car status"} %>
+  <%= f.submit %>
 <% end %>
 
-<%= will_paginate %>
+<div class="users" >
+<%= content_tag :table do %>
+  <%= content_tag :thead, display_sort_column_headers(@q), nil, false %>
+  <%= content_tag :tbody, display_search_results(@cars), nil, false %>
+<% end %>
+</div>
 
-<ul class="users">
-  <% @cars.each do |car| %>
-    <li>
-      <%= link_to car.licensePlateNumber, car %>
-      <%= car.status %>
-    </li>
-  <% end %>
-</ul>
 
-<%= will_paginate %>

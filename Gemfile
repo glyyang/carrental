@@ -41,6 +41,8 @@ gem 'faker', '1.7.3'
 # Use for Pagination
 gem 'will_paginate',           '3.1.5'
 gem 'bootstrap-will_paginate', '1.0.0'
+# Use ransack for Search 
+gem 'ransack'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
