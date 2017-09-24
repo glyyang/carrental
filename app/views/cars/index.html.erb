@@ -15,11 +15,13 @@
   <%= f.submit %>
 <% end %>
 
+<%= will_paginate %>
 <div class="users" >
 <%= content_tag :table do %>
   <%= content_tag :thead, display_sort_column_headers(@q), nil, false %>
   <%= content_tag :tbody, display_search_results(@cars), nil, false %>
 <% end %>
 </div>
+<%= will_paginate %>
 
 
