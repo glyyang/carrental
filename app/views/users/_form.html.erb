@@ -1,32 +1,40 @@
-<%= form_with(model: user, local: true) do |form| %>
-  <% if user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
-      <% user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@user) do |f| %>
+      <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <div class="alert alert-danger">
+            The form contains <%= pluralize(@user.errors.count, "error") %>.
+          </div>
+          <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
+    
+      <%= f.label :name %>
+      <%= f.text_field :name %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :user_name %>
-  </div>
+      <%= f.label :email %>
+      <%= f.email_field :email %>
 
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email, id: :user_email %>
-  </div>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
 
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.text_field :password, id: :user_password %>
-  </div>
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation %>
+      
+      <% if logged_in? && isAdmin? %>
+        <%= f.label :role %>
+        <%= f.select :role, [[:Customer, :Customer], [:Admin, :Admin]], {:prompt => "Please select role"} %>
+      <% elsif logged_in? && isSuperAdmin? %>
+        <%= f.label :role %>
+        <%= f.select :role, [[:Customer, :Customer], [:Admin, :Admin], [:SuperAdmin, :SuperAdmin]], {:prompt => "Please select role"} %>
+      <% end %>
 
-  <div class="actions">
-    <%= form.submit %>
+      <%= f.submit "Submit", class: "btn btn-primary" %>
+    <% end %>
   </div>
-<% end %>
+</div>
