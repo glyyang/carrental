@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   resources :reservations do
     member do
       put 'pickup'
-      put 'return'
+      put 'returncar'
       put 'cancel'
     end
   end

@@ -54,7 +54,7 @@
 <% end %>
 
 <% if @reservation.reservationStatus == "Active" %>
-    <%= button_to "return", return_reservation_path(@reservation), :method => :put %>
+    <%= button_to "return", returncar_reservation_path(@reservation), :method => :put %>
 <% end %>
 
 <%= link_to 'Edit', edit_reservation_path(@reservation) %> |

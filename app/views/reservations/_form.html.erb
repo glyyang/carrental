@@ -15,6 +15,9 @@
       <strong>Car plate number:</strong>
       <%= Car.find(@reservation.car_id).licensePlateNumber %>
     </p>
+    
+    <%= form.hidden_field :car_id, value: @reservation.car_id %>
+    <%= form.hidden_field :user_id, value: session[:user_id] %>
 
     <div class="card-body">
       <%= form.label "Check out time:" %><br>

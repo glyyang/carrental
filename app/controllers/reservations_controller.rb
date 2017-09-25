@@ -29,34 +29,26 @@ class ReservationsController < ApplicationController
   # POST /reservations
   # POST /reservations.json
   def create
-
     @reservation = Reservation.new(reservation_params)
-
-    respond_to do |format|
-      if @reservation.save
-        PickupCheckJob.set(wait_until: @reservation.checkOutTime + 60).perform_later(@reservation.id)
-        format.html { redirect_to @reservation, notice: 'Reservation was successfully created.' }
-        format.json { render :show, status: :created, location: @reservation }
-        car = Car.find(@reservation.car_id)
-        car.update_attributes(:status => "CheckedOut")
-      else
-        format.html { render :new }
-        format.json { render json: @reservation.errors, status: :unprocessable_entity }
-      end
+    if @reservation.save
+      flash[:success] = 'Reservation was successfully created.'
+      PickupCheckJob.set(wait_until: @reservation.checkOutTime + 60).perform_later(@reservation.id)
+      redirect_to @reservation
+      car = Car.find(@reservation.car_id)
+      car.update_attributes(:status => "CheckedOut")
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /reservations/1
   # PATCH/PUT /reservations/1.json
   def update
-    respond_to do |format|
-      if @reservation.update(reservation_params)
-        format.html { redirect_to @reservation, notice: 'Reservation was successfully updated.' }
-        format.json { render :show, status: :ok, location: @reservation }
-      else
-        format.html { render :edit }
-        format.json { render json: @reservation.errors, status: :unprocessable_entity }
-      end
+    if @reservation.update(reservation_params)
+      flash[:success] = 'Reservation was successfully updated.'
+      redirect_to @reservation
+    else
+      render :edit
     end
   end
 
@@ -64,38 +56,35 @@ class ReservationsController < ApplicationController
   # DELETE /reservations/1.json
   def destroy
     @reservation.destroy
-    respond_to do |format|
-      format.html { redirect_to reservations_url, notice: 'Reservation was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    flash[:success] = 'Reservation deleted!'
+    redirect_to reservations_url
   end
 
   def pickup
     @reservation = Reservation.find(params[:id])
-    respond_to do |format|
-      if @reservation.update_attributes(:pickUpTime => Time.now)
-        @reservation.update_attributes(:reservationStatus => "Active")
-        ReturnCheckJob.set(wait_until: @reservation.expectedReturnTime + 60).perform_later(@reservation.id)
-        format.html { redirect_to @reservation, notice: 'Car was successfully picked up.' }
-        format.json { render :show, status: :ok, location: @reservation }
-      end
+    if @reservation.update_attributes(:pickUpTime => Time.now)
+      flash[:success] = 'Car was successfully picked up. Have a good time!'
+      @reservation.update_attributes(:reservationStatus => "Active")
+      ReturnCheckJob.set(wait_until: @reservation.expectedReturnTime + 60).perform_later(@reservation.id)
+      redirect_to @reservation
     end
   end
 
-  def return
+  def returncar
     @reservation = Reservation.find(params[:id])
-    respond_to do |format|
-      if @reservation.update_attributes(:returnTime => Time.now)
-        @reservation.update_attributes(:reservationStatus => "Complete")
-        format.html { redirect_to @reservation, notice: 'Car was successfully returned.' }
-        format.json { render :show, status: :ok, location: @reservation }
-      end
+    if @reservation.update_attributes(:returnTime => Time.now)
+      flash[:success] = 'Car was successfully returned. Thank you!'
+      @reservation.update_attributes(:reservationStatus => "Complete")
+      redirect_to @reservation
     end
   end
 
   def cancel
     @reservation = Reservation.find(params[:id])
-    @reservation.update_attributes(:reservationStatus => "Cancel")
+    if @reservation.update_attributes(:reservationStatus => "Cancel")
+      flash[:success] = "Reservation successfully canceled!"
+      redirect_to @reservation
+    end
   end
 
   private
@@ -106,7 +95,7 @@ class ReservationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def reservation_params
-      params.require(:reservation).permit(:registrationNumber, :checkOutTime, :pickUpTime, :expectedReturnTime, :returnTime, :reservationStatus, :car_id)
+      params.require(:reservation).permit(:registrationNumber, :checkOutTime, :pickUpTime, :expectedReturnTime, :returnTime, :reservationStatus, :user_id, :car_id)
     end
   
 end

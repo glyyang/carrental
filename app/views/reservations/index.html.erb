@@ -2,14 +2,16 @@
 
 <h1>Reservations</h1>
 
-<table>
-  <thead>
+<table class="table">
+  <thead class="thead-default">
     <tr>
       
       <th>Checkouttime</th>
       <th>Pickuptime</th>
       <th>Expectedreturntime</th>
       <th>Returntime</th>
+      <th>User name</th>
+      <th>Car licensePlateNumber</th>
       <th>Reservationstatus</th>
       <th colspan="3"></th>
     </tr>
@@ -23,6 +25,8 @@
         <td><%= reservation.pickUpTime %></td>
         <td><%= reservation.expectedReturnTime %></td>
         <td><%= reservation.returnTime %></td>
+        <td><%= User.find_by_id(reservation.user_id).name %></td>
+        <td><%= Car.find_by_id(reservation.user_id).licensePlateNumber %></td>
         <td><%= reservation.reservationStatus %></td>
         <td><%= link_to 'Show', reservation %></td>
         <td><%= link_to 'Edit', edit_reservation_path(reservation) %></td>
