@@ -12,26 +12,27 @@
     <% end %>
     
     <p>
-      <strong>Car plate number to be reserverd:</strong>
+      <strong>Car plate number:</strong>
       <%= Car.find(@reservation.car_id).licensePlateNumber %>
     </p>
-    
-    <%= form.hidden_field :car_id, value: @reservation.car_id%>
 
-    <div class="field">
-      <%= form.label :checkOutTime %>
+    <div class="card-body">
+      <%= form.label "Check out time:" %><br>
       <%= form.datetime_select :checkOutTime, id: :reservation_checkOutTime %>
     </div>
+    
+    <br>
 
-
-    <div class="field">
-      <%= form.label :expectedReturnTime %>
+    <div class="card">
+      <%= form.label "Expected return time:" %> <br>
       <%= form.datetime_select :expectedReturnTime, id: :reservation_expectedReturnTime %>
     </div>
+    
+    <br>
 
     <div class="actions">
       <% form.hidden_field :car_id%>
       <% hidden_field_tag 'car_id', @reservation.car_id %>
-      <%= form.submit %>
+      <%= form.submit "Make a reservation" %>
     </div>
 <% end %>

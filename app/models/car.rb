@@ -11,4 +11,8 @@ class Car < ApplicationRecord
   validates :location, presence: true
   validates :status, presence: true, inclusion: {in: statuses}
   
+  def isAvailable?
+    status == "Available"
+  end
+  
 end

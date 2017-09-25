@@ -2,7 +2,7 @@
 
 <p>
   <strong>Car Plate Number:</strong>>
-  <%= @reservation.car_id %>
+  <%=  Car.find(@reservation.car_id).licensePlateNumber %>
 </p>
 
 <p>
