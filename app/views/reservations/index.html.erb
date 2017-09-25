@@ -26,7 +26,7 @@
         <td><%= reservation.expectedReturnTime %></td>
         <td><%= reservation.returnTime %></td>
         <td><%= User.find_by_id(reservation.user_id).name %></td>
-        <td><%= Car.find_by_id(reservation.user_id).licensePlateNumber %></td>
+        <td><%= Car.find_by_id(reservation.car_id).licensePlateNumber %></td>
         <td><%= reservation.reservationStatus %></td>
         <td><%= link_to 'Show', reservation %></td>
         <td><%= link_to 'Edit', edit_reservation_path(reservation) %></td>

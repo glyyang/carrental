@@ -8,18 +8,27 @@
     <nav>
       <ul class="nav navbar-nav navbar-right">
         <% if logged_in? %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            Cars <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Search & view cars", cars_path %></li>
+              <% if isAdmin? || isSuperAdmin? %>
+                <li><%= link_to "Add new car", new_car_path %></li>
+              <% end %>
+            </ul>
+          </li>
+          <% if isAdmin? || isSuperAdmin? %>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              Cars <b class="caret"></b>
+              Reservations <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-                <li><%= link_to "Search & view cars", cars_path %></li>
-                <% if isAdmin? || isSuperAdmin? %>
-                  <li><%= link_to "Add new car", new_car_path %></li>
-                <% end %>
+                <li><%= link_to "Search & view reservations", reservations_path %></li>
+                <li><%= link_to "Add new reservation", new_reservation_path %></li>
               </ul>
             </li>
-          <% if isAdmin? || isSuperAdmin? %>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               Users <b class="caret"></b>

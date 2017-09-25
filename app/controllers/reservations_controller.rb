@@ -75,6 +75,13 @@ class ReservationsController < ApplicationController
     if @reservation.update_attributes(:returnTime => Time.now)
       flash[:success] = 'Car was successfully returned. Thank you!'
       @reservation.update_attributes(:reservationStatus => "Complete")
+      @user = User.find(@reservation.user_id)
+      @car = Car.find(@reservation.car_id)
+      @car.update_attributes(:status => "Available")
+      price = @car.hourlyRentalRate
+      hold_time = (@reservation.returnTime - @reservation.pickUpTime).hour
+      charge = @user.rentalCharge + price*hold_time
+      @user.update_attributes(:rentalCharge => charge, :notification => "You have pending charge!")
       redirect_to @reservation
     end
   end
