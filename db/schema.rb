@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(version: 20170923204058) do
     t.string "email", null: false
     t.string "name"
     t.string "role", default: "Customer"
+    t.float "rentalCharge", default: 0.0
+    t.string "notification", default: "You can reserve a car!"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest"
