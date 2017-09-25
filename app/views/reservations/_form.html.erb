@@ -1,0 +1,37 @@
+<%= form_with(model: reservation, local: true) do |form| %>
+    <% if reservation.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
+
+          <ul>
+            <% reservation.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    
+    <p>
+      <strong>Car plate number to be reserverd:</strong>
+      <%= Car.find(@reservation.car_id).licensePlateNumber %>
+    </p>
+    
+    <%= form.hidden_field :car_id, value: @reservation.car_id%>
+
+    <div class="field">
+      <%= form.label :checkOutTime %>
+      <%= form.datetime_select :checkOutTime, id: :reservation_checkOutTime %>
+    </div>
+
+
+    <div class="field">
+      <%= form.label :expectedReturnTime %>
+      <%= form.datetime_select :expectedReturnTime, id: :reservation_expectedReturnTime %>
+    </div>
+
+    <div class="actions">
+      <% form.hidden_field :car_id%>
+      <% hidden_field_tag 'car_id', @reservation.car_id %>
+      <%= form.submit %>
+    </div>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170923204058) do
+ActiveRecord::Schema.define(version: 20170925021832) do
 
   create_table "cars", force: :cascade do |t|
     t.string "licensePlateNumber", null: false
@@ -23,6 +23,20 @@ ActiveRecord::Schema.define(version: 20170923204058) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["licensePlateNumber"], name: "index_cars_on_licensePlateNumber", unique: true
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.datetime "checkOutTime", null: false
+    t.datetime "pickUpTime"
+    t.datetime "expectedReturnTime", null: false
+    t.datetime "returnTime"
+    t.string "reservationStatus", default: "Awaiting"
+    t.integer "user_id"
+    t.integer "car_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["car_id"], name: "index_reservations_on_car_id"
+    t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

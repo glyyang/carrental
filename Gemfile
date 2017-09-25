@@ -43,6 +43,12 @@ gem 'will_paginate',           '3.1.5'
 gem 'bootstrap-will_paginate', '1.0.0'
 # Use ransack for Search 
 gem 'ransack'
+# Use for backgroud processing
+gem 'sidekiq'
+# Redis-backed Ruby library for creating background jobs
+gem 'resque'
+# A light-weight job scheduling system built on top of resque
+gem 'resque-scheduler'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

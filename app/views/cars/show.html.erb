@@ -19,7 +19,7 @@
 
 
 
-<%= link_to 'Reserve', edit_car_path(@car) %> |
+<%= link_to 'Reserve', new_reservation_path(:param1 => @car.id) %> |
 <% if isAdmin? || isSuperAdmin? %>
   <%= link_to 'Edit', edit_car_path(@car) %> |
   <%= link_to "Delete", @car, method: :delete, data: { confirm: "Delete this car?" } %> |
