@@ -1,6 +1,7 @@
 class CarsController < ApplicationController
   include CarsHelper
-  before_action :logged_in_user, only: [:new, :show, :edit, :update, :destroy]
+  before_action :logged_in_user, only: [:index, :new, :show, :edit, :update, :destroy]
+  before_action :logged_in_as_admin, only: [:new, :destroy, :edit, :update]
   
   # GET /cars
   # GET /cars.json

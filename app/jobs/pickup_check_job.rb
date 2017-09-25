@@ -8,7 +8,7 @@ class PickupCheckJob < ApplicationJob
     if reservation.reservationStatus == "Awaiting"
       reservation.update_attributes(:reservationStatus => "Cancel")
       car = Car.find_by_id(reservation.car_id)
-      car.update_attributes(:status => "Available")
+      car.update_attribute(:status, "Available")
     end
   end
 end

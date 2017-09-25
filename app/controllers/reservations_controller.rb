@@ -1,13 +1,20 @@
 class ReservationsController < ApplicationController
   
   require 'date'
-  before_action :set_reservation, only: [:show, :edit, :update, :destroy]
   Time.zone = 'Eastern Time (US & Canada)'
+  
+  before_action :set_reservation, only: [:show, :edit, :update, :destroy]
+  before_action :logged_in_user, only: [:show, :edit, :index, :new, :create, :pickup, :returncar, :cancel, :destroy]
+  before_action :logged_in_as_admin, only: [:edit, :destroy]
 
   # GET /reservations
   # GET /reservations.json
   def index
-    @reservations = Reservation.all
+    if isAdmin? || isSuperAdmin?
+      @reservations = Reservation.all
+    else
+      @reservations = Reservation.where(:user_id => session[:user_id]) || [] # return current user record or empty
+    end
   end
 
   # GET /reservations/1
@@ -35,7 +42,7 @@ class ReservationsController < ApplicationController
       PickupCheckJob.set(wait_until: @reservation.checkOutTime + 60).perform_later(@reservation.id)
       redirect_to @reservation
       car = Car.find(@reservation.car_id)
-      car.update_attributes(:status => "CheckedOut")
+      car.update_attribute(:status, "Reserved")
     else
       render :new
     end
@@ -65,6 +72,8 @@ class ReservationsController < ApplicationController
     if @reservation.update_attributes(:pickUpTime => Time.now)
       flash[:success] = 'Car was successfully picked up. Have a good time!'
       @reservation.update_attributes(:reservationStatus => "Active")
+      car = Car.find(@reservation.car_id)
+      car.update_attribute(:status, "CheckedOut")
       ReturnCheckJob.set(wait_until: @reservation.expectedReturnTime + 60).perform_later(@reservation.id)
       redirect_to @reservation
     end
@@ -75,13 +84,14 @@ class ReservationsController < ApplicationController
     if @reservation.update_attributes(:returnTime => Time.now)
       flash[:success] = 'Car was successfully returned. Thank you!'
       @reservation.update_attributes(:reservationStatus => "Complete")
-      @user = User.find(@reservation.user_id)
-      @car = Car.find(@reservation.car_id)
-      @car.update_attributes(:status => "Available")
-      price = @car.hourlyRentalRate
-      hold_time = (@reservation.returnTime - @reservation.pickUpTime).hour
-      charge = @user.rentalCharge + price*hold_time
-      @user.update_attributes(:rentalCharge => charge, :notification => "You have pending charge!")
+      user = User.find(@reservation.user_id)
+      car = Car.find(@reservation.car_id)
+      car.update_attribute(:status, "Available")
+      price = car.hourlyRentalRate
+      hold_time = (@reservation.returnTime - @reservation.pickUpTime)/3600.0 # convert to hours
+      charge = user.rentalCharge + price*hold_time
+      user.update_attribute(:rentalCharge, charge) 
+      user.update_attribute(:notification, "You have pending charge!")
       redirect_to @reservation
     end
   end

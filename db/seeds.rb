@@ -45,7 +45,7 @@ end
     hr = Faker::Number.between(80.00, 300.00)
     style = "#{Car.styles.key(cnt%3)}"
     loc = Faker::Address.zip_code
-    status = "#{Car.statuses.key(cnt%2)}"
+    status = "Available"
     Car.create!(
         licensePlateNumber: lpt,
         manufacturer: man,

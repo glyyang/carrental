@@ -10,8 +10,8 @@ class ReturnCheckJob < ApplicationJob
       car = Car.find(reservation.car_id)
       user = User.find(reservation.user_id)
       notice = "You are late to return the car"
-      car.update_attributes(:status => "Available")
-      user.update_attributes(:notification => notice)
+      car.update_attribute(:status, "Available")
+      user.update_attribute(:notification, notice)
     end
   end
 end
