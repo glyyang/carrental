@@ -14,6 +14,9 @@ There are one Admin, one SuperAdmin and 100 Customer users present along with th
 
 ## Reference:
 [Rails Guides](http://guides.rubyonrails.org)
+
 [RUBY ON RAILS TUTORIAL](https://www.railstutorial.org)
+
 [Ruby on Rails: Authentication](https://www.codecademy.com/courses/rails-auth/)
+
 [TutorialsPoint: Ruby on Rails Tutorial](https://www.tutorialspoint.com//ruby-on-rails/index.htm)
