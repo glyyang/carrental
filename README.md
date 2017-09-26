@@ -9,3 +9,5 @@ App Entity-Relationship Diagram
 ## Usage:
 
 There are one Admin, one SuperAdmin and 100 Customer users present along with this app as default (shown in db/seeds.rb file). Any user signed up on the Home page are assigned as Customer status. To add more Admin or SuperAdmin, you should login using the Admin or SuperAdmin account info. Also, this app generate 50 car samples inside database to make car rental reservations.
+
+[Click here to use this app online!](https://car-rental-app-2017.herokuapp.com/)
