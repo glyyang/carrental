@@ -37,14 +37,21 @@ class ReservationsController < ApplicationController
   # POST /reservations.json
   def create
     @reservation = Reservation.new(reservation_params)
-    if @reservation.save
-      flash[:success] = 'Reservation was successfully created.'
-      PickupCheckJob.set(wait_until: @reservation.checkOutTime + 60).perform_later(@reservation.id)
-      redirect_to @reservation
-      car = Car.find(@reservation.car_id)
-      car.update_attribute(:status, "Reserved")
+    user = User.find(@reservation.user_id)
+    if user.available
+      if @reservation.save
+        flash[:success] = 'Reservation was successfully created.'
+        PickupCheckJob.set(wait_until: @reservation.checkOutTime + 60).perform_later(@reservation.id)
+        redirect_to @reservation
+        car = Car.find(@reservation.car_id)
+        car.update_attribute(:status, "Reserved")
+        user.update_attribute(:available, false)
+      else
+        render :new
+      end
     else
-      render :new
+      flash[:danger] = "You have a car in hold, and cannot reserve another car until you return it."
+      redirect_to user
     end
   end
 

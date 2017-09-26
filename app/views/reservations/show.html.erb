@@ -57,5 +57,7 @@
     <%= button_to "return", returncar_reservation_path(@reservation), :method => :put %>
 <% end %>
 
-<%= link_to 'Edit', edit_reservation_path(@reservation) %> |
+<%if isAdmin? || isSuperAdmin? %>
+  <%= link_to 'Edit', edit_reservation_path(@reservation) %> |
+<% end %>
 <%= link_to 'Back', reservations_path %>

@@ -14,25 +14,25 @@
     
       <%= f.label :licensePlateNumber %>
       <%= f.text_field :licensePlateNumber %>
-
+      <br>
       <%= f.label :manufacturer %>
       <%= f.text_field :manufacturer %>
-
+      <br>
       <%= f.label :model %>
       <%= f.text_field :model %>
-
+      <br>
       <%= f.label :hourlyRentalRate %>
       <%= f.text_field :hourlyRentalRate %>
-      
+      <br>
       <%= f.label :style %>
-      <%= f.collection_select :style, Car.styles, :style, :style, {:prompt => "Please select car status"} %>
-      
+      <%= f.collection_select :style, Car.styles, :first, :first, {:prompt => "Please select car status"} %>
+      <br>
       <%= f.label :location %>
       <%= f.text_field :location %>
-      
+      <br>
       <%= f.label :status %>
-      <%= f.collection_select :status, Car.statuses, :status, :status, {:prompt => "Please select car status"} %> 
-
+      <%= f.collection_select :status, Car.statuses, :first, :first, {:prompt => "Please select car status"} %> 
+      <br>
       <%= f.submit "Submit car info", class: "btn btn-primary" %>
     <% end %>
     

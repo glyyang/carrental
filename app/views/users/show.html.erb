@@ -12,6 +12,8 @@
           <%= @user.email %><br>
           <%= label_tag "Total rental charge" %> :
           <%= '%.2f' % @user.rentalCharge %><br>
+          <%= label_tag "Available to borrow car?" %>
+          <%= (@user.available)? "Yes": "No" %><br>
           <%= label_tag :notification %> : 
           <%= @user.notification %>
         <% end %>

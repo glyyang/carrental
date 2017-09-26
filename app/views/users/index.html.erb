@@ -3,10 +3,10 @@
 
 <%= search_form_for @q_users do |f| %>
   <%= f.label :name %>
-  <%= f.search_field :name_cont %>
+  <%= f.search_field :name_cont %><br>
   <%= f.label :role %>
-  <%= f.collection_select :role_eq, User.roles, :first, :first, {:include_blank => "Please select user type"} %>
-  <%= submit_tag 'Search', name: nil %>
+  <%= f.collection_select :role_eq, User.roles, :first, :first, {:include_blank => "Please select user type"} %><br>
+  <%= submit_tag 'Search', name: nil, class: "btn btn-primary" %>
 <% end %>
 
 <%= will_paginate %>

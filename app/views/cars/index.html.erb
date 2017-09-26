@@ -3,16 +3,16 @@
 
 <%= search_form_for @q_cars do |f| %>
   <%= f.label :location %>
-  <%= f.search_field :location_cont %>
+  <%= f.search_field :location_cont %><br>
   <%= f.label :manufacturer %>
-  <%= f.collection_select :manufacturer_cont, Car.select("distinct manufacturer"), :manufacturer, :manufacturer, {:include_blank => "Please select car manufacturer"} %>
+  <%= f.collection_select :manufacturer_cont, Car.select("distinct manufacturer"), :manufacturer, :manufacturer, {:include_blank => "Please select car manufacturer"} %><br>
   <%= f.label :model %>
-  <%= f.collection_select :model_cont, Car.select("distinct model"), :model, :model, {:include_blank => "Please select car model"} %>
+  <%= f.collection_select :model_cont, Car.select("distinct model"), :model, :model, {:include_blank => "Please select car model"} %><br>
   <%= f.label :style %>
-  <%= f.collection_select :style_cont, Car.select("distinct style"), :style, :style, {:include_blank => "Please select car style"} %> 
+  <%= f.collection_select :style_cont, Car.select("distinct style"), :style, :style, {:include_blank => "Please select car style"} %><br>
   <%= f.label :status %>
-  <%= f.collection_select :status_cont, Car.select("distinct status"), :status, :status, {:include_blank => "Please select car status"} %>
-  <%= f.submit %>
+  <%= f.collection_select :status_cont, Car.select("distinct status"), :status, :status, {:include_blank => "Please select car status"} %><br>
+  <%= f.submit "Search", class: "btn btn-primary" %>
 <% end %>
 
 <%= will_paginate %>

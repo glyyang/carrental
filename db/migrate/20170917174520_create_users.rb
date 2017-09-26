@@ -6,6 +6,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :role, default: "Customer"
       t.float :rentalCharge, default: 0.0
       t.string :notification, default: "You can reserve a car!"
+      t.boolean :available, default: true
 
       t.timestamps
     end

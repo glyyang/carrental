@@ -2,7 +2,7 @@ module UsersHelper
     
   def user_fields 
     # fields to be displayed on front-end view
-    [:name, :email] 
+    [:name, :email, :role, :rentalCharge, :available] 
   end
     
   def action 
