@@ -36,7 +36,6 @@ class ReservationsController < ApplicationController
   # POST /reservations
   # POST /reservations.json
   def create
-    
     car_id = reservation_params[:car_id]
     user_id = reservation_params[:user_id]
     if user_id==""
@@ -87,6 +86,8 @@ class ReservationsController < ApplicationController
   # DELETE /reservations/1
   # DELETE /reservations/1.json
   def destroy
+    User.find(@reservation.user_id).update_attribute(:available, true)
+    Car.find(@reservation.car_id).update_attribute(:status, "Available")
     @reservation.destroy
     flash[:success] = 'Reservation deleted!'
     redirect_to reservations_url
@@ -119,7 +120,8 @@ class ReservationsController < ApplicationController
       hold_time = (@reservation.returnTime - @reservation.pickUpTime)/3600.0 # convert to hours
       charge = user.rentalCharge + price*hold_time
       user.update_attribute(:rentalCharge, charge) 
-      user.update_attribute(:notification, "You have pending charge!")
+      # user.update_attribute(:notification, "You have pending charge!")
+      user.update_attribute(:available, true)
       redirect_to @reservation
     end
   end
@@ -127,6 +129,8 @@ class ReservationsController < ApplicationController
   def cancel
     @reservation = Reservation.find(params[:id])
     if @reservation.update_attributes(:reservationStatus => "Cancel")
+      User.find(@reservation.user_id).update_attribute(:available, true)
+      Car.find(@reservation.car_id).update_attribute(:status, "Available")
       flash[:success] = "Reservation successfully canceled!"
       redirect_to @reservation
     end
