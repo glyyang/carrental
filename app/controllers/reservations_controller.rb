@@ -24,9 +24,9 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/new
   def new
-    param1 = params[:param1]
+    # param1 = params[:param1]
     @reservation = Reservation.new
-    @reservation.update_attributes(:car_id => param1)
+    # @reservation.update_attributes(:car_id => param1)
   end
 
   # GET /reservations/1/edit
@@ -36,18 +36,36 @@ class ReservationsController < ApplicationController
   # POST /reservations
   # POST /reservations.json
   def create
-    @reservation = Reservation.new(reservation_params)
-    user = User.find(@reservation.user_id)
+    
+    car_id = reservation_params[:car_id]
+    user_id = reservation_params[:user_id]
+    if user_id==""
+      flash[:danger] = "You should select a user."
+      redirect_to new_reservation_path(:param1 => car_id)
+      return
+    end
+    unless Car.find(car_id).status == "Available"
+      flash[:danger] = "This car is not available."
+      redirect_to cars_path
+      return
+    end
+    user = User.find(user_id)
     if user.available
+      @reservation = Reservation.new(reservation_params)
       if @reservation.save
         flash[:success] = 'Reservation was successfully created.'
-        PickupCheckJob.set(wait_until: @reservation.checkOutTime + 60).perform_later(@reservation.id)
+        PickupCheckJob.set(wait_until: @reservation.checkOutTime + 30.minutes).perform_later(@reservation.id)
         redirect_to @reservation
         car = Car.find(@reservation.car_id)
         car.update_attribute(:status, "Reserved")
         user.update_attribute(:available, false)
       else
-        render :new
+        if @reservation.errors.any?
+          @reservation.errors.full_messages.each do |message|
+            flash[:errors] = message
+          end
+        end
+        redirect_to new_reservation_path(:param1 => car_id)
       end
     else
       flash[:danger] = "You have a car in hold, and cannot reserve another car until you return it."
@@ -76,7 +94,10 @@ class ReservationsController < ApplicationController
 
   def pickup
     @reservation = Reservation.find(params[:id])
-    if @reservation.update_attributes(:pickUpTime => Time.now)
+    if @reservation.checkOutTime > Time.now
+      flash[:error] = 'You need to wait to pick up the car!'
+      redirect_to @reservation
+    elsif @reservation.update_attributes(:pickUpTime => Time.now)
       flash[:success] = 'Car was successfully picked up. Have a good time!'
       @reservation.update_attributes(:reservationStatus => "Active")
       car = Car.find(@reservation.car_id)

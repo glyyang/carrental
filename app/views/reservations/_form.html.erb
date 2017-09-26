@@ -10,23 +10,27 @@
         </ul>
       </div>
   <% end %>
-  
+
+  <% param1 = params[:param1] %>
   
   <%= form.label "Car plate number:" %>
-  <%= Car.find(@reservation.car_id).licensePlateNumber %>
+  <%= Car.find(param1).licensePlateNumber %><br>
   
-  <%= form.hidden_field :car_id, value: @reservation.car_id %>
-  <%= form.hidden_field :user_id, value: session[:user_id] %>
-
+  <%= form.hidden_field :car_id, value: param1 %>
+  <% if isAdmin? || isSuperAdmin? %>
+    <%= form.collection_select :user_id, User.all, :id, lambda {|u| "#{u.id}- #{u.name}"}, {:prompt => "Please select user id"} %><br>
+  <% else %>
+    <%= form.hidden_field :user_id, value: session[:user_id] %><br>
+  <% end %>
   
   <%= form.label "Check out time:" %><br>
-  <%= form.datetime_select :checkOutTime, id: :reservation_checkOutTime %>
+  <%= form.datetime_select :checkOutTime, id: :reservation_checkOutTime %><br>
 
 
 
-  <%= form.label "Expected return time:" %> 
-  <%= form.datetime_select :expectedReturnTime, id: :reservation_expectedReturnTime %>
+  <%= form.label "Expected return time:" %> <br>
+  <%= form.datetime_select :expectedReturnTime, id: :reservation_expectedReturnTime %><br>
 
-  <%= form.submit "Make a reservation", class: "btn btn-primary" %>
+  <%= form.submit "Make a reservation", class: "btn btn-primary" %><br>
     
 <% end %>
