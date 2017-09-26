@@ -29,12 +29,12 @@
       <% if logged_in? && isAdmin? %>
         <%= f.label :role %>
         <%= f.collection_select :role, User.roles.except(:SuperAdmin), :first, :first, {:prompt => "Please select role"} %><br>
-        <%= f.label "Available to borrow car" %>
+        <%= f.label "Available to rent car" %>
         <%= f.collection_select :available, {false=>0, true=>1}, :first, :first, {:prompt => "Please select role"} %><br>
       <% elsif logged_in? && isSuperAdmin? %>
         <%= f.label :role %>
         <%= f.collection_select :role, User.roles, :role, :role, {:prompt => "Please select role"} %><br>
-        <%= f.label "Available to borrow car" %>
+        <%= f.label "Available to rent car" %>
         <%= f.collection_select :available, {false=>0, true=>1}, :first, :first, {:prompt => "Please select role"} %><br>
       <% end %>
       <br>
