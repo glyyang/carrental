@@ -42,6 +42,7 @@ class UsersController < ApplicationController
       end
       redirect_to @user
     else
+      flash[:danger] = "Failed to sign up"
       render :new
     end
   end
@@ -74,7 +75,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :role)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :rentalCharge, :notification, :available)
     end
     
     # Before filters
