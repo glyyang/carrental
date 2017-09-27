@@ -13,11 +13,12 @@
 
   <% param1 = params[:param1] %>
   
-  <%= form.label "Car plate number:" %>
+  <%= form.label "Car plate number: " %>
   <%= Car.find(param1).licensePlateNumber %><br>
   
   <%= form.hidden_field :car_id, value: param1 %>
   <% if isAdmin? || isSuperAdmin? %>
+    <%= form.label "User id and name: " %>
     <%= form.collection_select :user_id, User.all, :id, lambda {|u| "#{u.id}- #{u.name}"}, {:prompt => "Please select user id"} %><br>
   <% else %>
     <%= form.hidden_field :user_id, value: session[:user_id] %><br>

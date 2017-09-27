@@ -27,6 +27,6 @@
   <% if !current_user?(@user) %>
     <%= link_to "Delete", @user, method: :delete, data: { confirm: "Delete this user?" } %> |
   <% end %>
+  <%= link_to 'List', users_path %> |
 <% end %>
-<%= link_to 'List', users_path %> |
 <%= link_to 'Back', :back %>

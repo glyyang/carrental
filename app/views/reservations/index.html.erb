@@ -5,7 +5,6 @@
 <table class="table">
   <thead class="thead-default">
     <tr>
-      
       <th>Checkouttime</th>
       <th>Pickuptime</th>
       <th>Expectedreturntime</th>
@@ -25,18 +24,33 @@
         <td><%= reservation.pickUpTime %></td>
         <td><%= reservation.expectedReturnTime %></td>
         <td><%= reservation.returnTime %></td>
-        <td><%= User.find_by_id(reservation.user_id).name %></td>
-        <td><%= Car.find_by_id(reservation.car_id).licensePlateNumber %></td>
+        <td>
+          <% user=User.find_by_id(reservation.user_id) %>
+          <%= link_to user.name, user %>
+        </td>
+        <td>
+          <% car=Car.find_by_id(reservation.car_id) %>
+          <%= link_to car.licensePlateNumber, car %>
+        </td>
         <td><%= reservation.reservationStatus %></td>
         <td><%= link_to 'Show', reservation %></td>
         <% if isAdmin? || isSuperAdmin? %>
           <td><%= link_to 'Edit', edit_reservation_path(reservation) %></td>
           <td><%= link_to 'Destroy', reservation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% elsif isCustomer? && !["Complete","Cancel"].include?(reservation.reservationStatus) %>
+          <td><%= link_to 'Cancel', edit_reservation_path(reservation) %></td>
         <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+  $(document).ready(function() {
+  $('.table').DataTable();
+});
+</script>
 
 <br>
 

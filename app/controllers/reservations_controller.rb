@@ -5,7 +5,7 @@ class ReservationsController < ApplicationController
   
   before_action :set_reservation, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user, only: [:show, :edit, :index, :new, :create, :pickup, :returncar, :cancel, :destroy]
-  before_action :logged_in_as_admin, only: [:edit, :destroy]
+  before_action :logged_in_as_admin, only: [:destroy]
 
   # GET /reservations
   # GET /reservations.json
@@ -26,7 +26,7 @@ class ReservationsController < ApplicationController
   def new
     # param1 = params[:param1]
     @reservation = Reservation.new
-    # @reservation.update_attributes(:car_id => param1)
+    # @reservation.update_attribute(:car_id, param1)
   end
 
   # GET /reservations/1/edit
@@ -98,9 +98,9 @@ class ReservationsController < ApplicationController
     if @reservation.checkOutTime > Time.now
       flash[:error] = 'You need to wait to pick up the car!'
       redirect_to @reservation
-    elsif @reservation.update_attributes(:pickUpTime => Time.now)
+    elsif @reservation.update_attribute(:pickUpTime, Time.now)
       flash[:success] = 'Car was successfully picked up. Have a good time!'
-      @reservation.update_attributes(:reservationStatus => "Active")
+      @reservation.update_attribute(:reservationStatus, "Active")
       car = Car.find(@reservation.car_id)
       car.update_attribute(:status, "CheckedOut")
       ReturnCheckJob.set(wait_until: @reservation.expectedReturnTime + 60).perform_later(@reservation.id)
@@ -110,9 +110,9 @@ class ReservationsController < ApplicationController
 
   def returncar
     @reservation = Reservation.find(params[:id])
-    if @reservation.update_attributes(:returnTime => Time.now)
+    if @reservation.update_attribute(:returnTime, Time.now)
       flash[:success] = 'Car was successfully returned. Thank you!'
-      @reservation.update_attributes(:reservationStatus => "Complete")
+      @reservation.update_attribute(:reservationStatus, "Complete")
       user = User.find(@reservation.user_id)
       car = Car.find(@reservation.car_id)
       car.update_attribute(:status, "Available")
@@ -126,9 +126,15 @@ class ReservationsController < ApplicationController
     end
   end
 
+  # PATCH/PUT /reservations/1
   def cancel
     @reservation = Reservation.find(params[:id])
-    if @reservation.update_attributes(:reservationStatus => "Cancel")
+    if ["Complete", "Cancel"].include? @reservation.reservationStatus
+      flash[:danger] = "Reservation cannot be canceled!"
+      redirect_to reservations_url
+      return
+    end
+    if @reservation.update_attribute(:reservationStatus, "Cancel")
       User.find(@reservation.user_id).update_attribute(:available, true)
       Car.find(@reservation.car_id).update_attribute(:status, "Available")
       flash[:success] = "Reservation successfully canceled!"

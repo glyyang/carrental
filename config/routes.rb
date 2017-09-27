@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get '/cars/new' => 'cars#new'
   resources :cars
   
+  
   resources :reservations do
     member do
       put 'pickup'
@@ -22,6 +23,8 @@ Rails.application.routes.draw do
       put 'cancel'
     end
   end
+  patch 'reservations/:id/cancel' => 'reservations#cancel'
+  post 'reservations/:id/cancel' => 'reservations#cancel'
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

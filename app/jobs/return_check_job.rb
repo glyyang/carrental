@@ -6,7 +6,7 @@ class ReturnCheckJob < ApplicationJob
     reservation_id = args[0]
     reservation = Reservation.find(reservation_id)
     if reservation.reservationStatus == "Active"
-      reservation.update_attributes(:reservationStatus => "Complete")
+      reservation.update_attribute(:reservationStatus, "Complete")
       car = Car.find(reservation.car_id)
       user = User.find(reservation.user_id)
       notice = "You are late to return the car"

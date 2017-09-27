@@ -62,6 +62,9 @@ module SessionsHelper
   def isSuperAdmin?
       session[:user_role] == 'SuperAdmin'
   end
+  def isCustomer?
+    session[:user_role] == 'Customer'
+  end
   
   def logged_in_as_admin
     unless (isAdmin? || isSuperAdmin?)

@@ -5,7 +5,11 @@
   <%= f.label :name %>
   <%= f.search_field :name_cont %><br>
   <%= f.label :role %>
-  <%= f.collection_select :role_eq, User.roles, :first, :first, {:include_blank => "Please select user type"} %><br>
+  <% if isAdmin? %>
+    <%= f.collection_select :role_eq, User.roles.except(:SuperAdmin), :first, :first, {:include_blank => "Please select user type"} %><br>
+  <% else %>
+    <%= f.collection_select :role_eq, User.roles, :first, :first, {:include_blank => "Please select user type"} %><br>
+  <% end %>
   <%= submit_tag 'Search', name: nil, class: "btn btn-primary" %>
 <% end %>
 
