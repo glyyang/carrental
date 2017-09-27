@@ -64,7 +64,7 @@ module SessionsHelper
   end
   
   def logged_in_as_admin
-    unless isAdmin? || isSuperAdmin?
+    unless (isAdmin? || isSuperAdmin?)
       store_location
       flash[:danger] = "Please login Admin or SuperAdmin to move on."
       redirect_to login_url
