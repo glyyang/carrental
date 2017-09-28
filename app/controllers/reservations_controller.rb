@@ -129,7 +129,7 @@ class ReservationsController < ApplicationController
   # PATCH/PUT /reservations/1
   def cancel
     @reservation = Reservation.find(params[:id])
-    if ["Complete", "Cancel"].include? @reservation.reservationStatus
+    if ["Active", "Complete", "Cancel"].include? @reservation.reservationStatus
       flash[:danger] = "Reservation cannot be canceled!"
       redirect_to reservations_url
       return
