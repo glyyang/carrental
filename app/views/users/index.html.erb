@@ -1,17 +1,21 @@
-<p id="notice"><%= notice %></p>
+<% provide(:title, 'All users') %>
+<h1>View and Search users</h1>
 
-<h1>Users</h1>
+<%= search_form_for @q_users do |f| %>
+  <%= f.label :name %>
+  <%= f.search_field :name_cont %><br>
+  <%= f.label :role %>
+  <% if isAdmin? %>
+    <%= f.collection_select :role_eq, User.roles.except(:SuperAdmin), :first, :first, {:include_blank => "Please select user type"} %><br>
+  <% else %>
+    <%= f.collection_select :role_eq, User.roles, :first, :first, {:include_blank => "Please select user type"} %><br>
+  <% end %>
+  <%= submit_tag 'Search', name: nil, class: "btn btn-primary" %>
+<% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Password</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<%= will_paginate %>
 
+<<<<<<< HEAD
   <tbody>
     <% @users.each do |user| %>
       <tr>
@@ -24,7 +28,11 @@
     <% end %>
   </tbody>
 </table>
+=======
+<%= content_tag :table, class: 'table' do %>
+  <%= content_tag :thead, display_user_sorted_column_headers(@q_users), nil, false  %>
+  <%= content_tag :tbody, display_user_search_results(@users), nil, false  %>
+<% end %>
+>>>>>>> 7aeb37be93b12094686fdafe4bcbee0d54f2379b
 
-<br>
-
-<%= link_to 'New User', new_user_path %>
+<%= will_paginate %>

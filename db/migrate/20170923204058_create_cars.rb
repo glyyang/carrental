@@ -11,5 +11,6 @@ class CreateCars < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
+    add_index :cars, :licensePlateNumber, unique: true
   end
 end

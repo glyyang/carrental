@@ -2,14 +2,15 @@
 
 <h1>Reservations</h1>
 
-<table>
-  <thead>
+<table class="table">
+  <thead class="thead-default">
     <tr>
-      <th>Registrationnumber</th>
       <th>Checkouttime</th>
       <th>Pickuptime</th>
       <th>Expectedreturntime</th>
       <th>Returntime</th>
+      <th>User name</th>
+      <th>Car licensePlateNumber</th>
       <th>Reservationstatus</th>
       <th colspan="3"></th>
     </tr>
@@ -18,15 +19,27 @@
   <tbody>
     <% @reservations.each do |reservation| %>
       <tr>
-        <td><%= reservation.registrationNumber %></td>
+        
         <td><%= reservation.checkOutTime %></td>
         <td><%= reservation.pickUpTime %></td>
         <td><%= reservation.expectedReturnTime %></td>
         <td><%= reservation.returnTime %></td>
+        <td>
+          <% user=User.find_by_id(reservation.user_id) %>
+          <%= link_to user.name, user %>
+        </td>
+        <td>
+          <% car=Car.find_by_id(reservation.car_id) %>
+          <%= link_to car.licensePlateNumber, car %>
+        </td>
         <td><%= reservation.reservationStatus %></td>
         <td><%= link_to 'Show', reservation %></td>
-        <td><%= link_to 'Edit', edit_reservation_path(reservation) %></td>
-        <td><%= link_to 'Destroy', reservation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if isAdmin? || isSuperAdmin? %>
+          <td><%= link_to 'Edit', edit_reservation_path(reservation) %></td>
+          <td><%= link_to 'Destroy', reservation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% elsif isCustomer? && !["Complete","Cancel"].include?(reservation.reservationStatus) %>
+          <td><%= link_to 'Cancel', edit_reservation_path(reservation) %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -34,4 +47,4 @@
 
 <br>
 
-<%= link_to 'New Reservation', new_reservation_path %>
+<%= link_to 'New Reservation', cars_path %>

@@ -27,5 +27,12 @@ test:
   database: db/test.sql
 
 production:
+<<<<<<< HEAD
   <<: *default
   database: db/production.sql
+=======
+  adapter: postgresql
+  database: car_rental_app_production
+  pool: 5
+  timeout: 5000
+>>>>>>> 7aeb37be93b12094686fdafe4bcbee0d54f2379b

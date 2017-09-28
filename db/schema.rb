@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170917210224) do
+ActiveRecord::Schema.define(version: 20170925021832) do
 
   create_table "cars", force: :cascade do |t|
-    t.string "licensePlateNumber"
+    t.string "licensePlateNumber", null: false
     t.string "manufacturer"
     t.string "model"
     t.float "hourlyRentalRate"
@@ -22,15 +22,15 @@ ActiveRecord::Schema.define(version: 20170917210224) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["licensePlateNumber"], name: "index_cars_on_licensePlateNumber", unique: true
   end
 
   create_table "reservations", force: :cascade do |t|
-    t.string "registrationNumber"
-    t.datetime "checkOutTime"
+    t.datetime "checkOutTime", null: false
     t.datetime "pickUpTime"
-    t.datetime "expectedReturnTime"
+    t.datetime "expectedReturnTime", null: false
     t.datetime "returnTime"
-    t.string "reservationStatus"
+    t.string "reservationStatus", default: "Awaiting"
     t.integer "user_id"
     t.integer "car_id"
     t.datetime "created_at", null: false
@@ -40,11 +40,16 @@ ActiveRecord::Schema.define(version: 20170917210224) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "email", null: false
     t.string "name"
-    t.string "email"
-    t.string "password"
+    t.string "role", default: "Customer"
+    t.float "rentalCharge", default: 0.0
+    t.string "notification", default: ""
+    t.boolean "available", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "password_digest"
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
 end

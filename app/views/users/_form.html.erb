@@ -1,32 +1,50 @@
+<<<<<<< HEAD
 <%= form_with(model: @user, local: true, :url => { :action => "create_and_update" }) do |form| %>
   <% if user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+=======
+>>>>>>> 7aeb37be93b12094686fdafe4bcbee0d54f2379b
 
-      <ul>
-      <% user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+  <div class="form-group">
+    <%= form_for(@user) do |f| %>
+      <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <div class="alert alert-danger">
+            The form contains <%= pluralize(@user.errors.count, "error") %>.
+          </div>
+          <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :user_name %>
+    
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <br>
+      <%= f.label :email %>
+      <%= f.email_field :email %>
+      <br>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+      <br>
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation %>
+      <br>
+      <% if logged_in? && isAdmin? %>
+        <%= f.label :role %>
+        <%= f.collection_select :role, User.roles.except(:SuperAdmin), :first, :first, {:prompt => "Please select role"} %><br>
+        <%= f.label "Available to rent car" %>
+        <%= f.collection_select :available, {false=>0, true=>1}, :first, :first, {:prompt => "Please select role"} %><br>
+      <% elsif logged_in? && isSuperAdmin? %>
+        <%= f.label :role %>
+        <%= f.collection_select :role, User.roles, :role, :role, {:prompt => "Please select role"} %><br>
+        <%= f.label "Available to rent car" %>
+        <%= f.collection_select :available, {false=>0, true=>1}, :first, :first, {:prompt => "Please select role"} %><br>
+      <% end %>
+      <br>
+      <%= f.submit "Submit", class: "btn btn-primary" %>
+    <% end %>
   </div>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email, id: :user_email %>
-  </div>
-
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.text_field :password, id: :user_password %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
